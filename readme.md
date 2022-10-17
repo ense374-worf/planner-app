@@ -1,4 +1,4 @@
-# Worf - Planner App Project
+# Worf - Study Sense
 
 ## Members
 Kevin Huang, Cameron Oehler, Bilal Alissa
