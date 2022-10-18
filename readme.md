@@ -6,7 +6,7 @@ Kevin Huang, Cameron Oehler, Bilal Alissa
 ## GitHub
 [ense374-worf (github.com)](https://github.com/ense374-worf)
 
-[Project Kanban & MVPs](https://github.com/orgs/ense374-worf/projects/1)
+[Project Kanban & MVPs](https://github.com/orgs/ense374-worf/projects/2)
 
 ## Project idea
 Our idea is to create a solution for students that helps them to track their classes schedule, assignments, exams, and other tasks. Students also need a useful tool that is easy to reach out in preparing for the next assignment and for reminding them of due dates. Using the skills we have learned from both courses ense 374 and cs 215, our team members will be able to develop our web-based solution.
