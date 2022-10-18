@@ -9,8 +9,11 @@ Project idea and vlog: https://youtu.be/6wL67tMxihg
 ## Activity 2 
 Project planning and documents: https://github.com/ense374-worf/study-sense/tree/main/Documentation
 
+Here is the vlog:[Activity 2](https://youtu.be/MiZjyk-VgVE)
+
 ## Project Vlogs
 [Activity 1](https://youtu.be/6wL67tMxihg)
+
 [Activity 2](https://youtu.be/MiZjyk-VgVE)
 
 
