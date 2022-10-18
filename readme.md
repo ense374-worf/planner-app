@@ -18,3 +18,7 @@ Students have a lot on their plate. With 4, 5, or even 6 concurrent classes it c
 
 ## Project Vlogs
 [2022-10-05](https://youtu.be/6wL67tMxihg)
+
+
+## Project Vlogs
+This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License.](https://creativecommons.org/licenses/by-sa/4.0/)
