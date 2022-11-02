@@ -23,3 +23,6 @@ The following diagrams help to describe the MVC (with separation of concerns), p
 
 ## Class Diagram
 ![Class Diagram](/Documentation/Diagrams/ClassDiagram.png)
+
+## Entity Relationship Model
+![Entity Relationship Model](/Documentation/Diagrams/ERM.png)
