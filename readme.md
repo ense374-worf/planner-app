@@ -22,11 +22,11 @@ Project planning and documents: https://github.com/ense374-worf/study-sense/tree
 [Project Kanban & MVPs](https://github.com/orgs/ense374-worf/projects/2)
 
 ## Activity 3
-[Diagrams](/Documentation/Diagrams)
+[Diagrams](/Documentation/Activity_3/Diagrams)
 
-[Lofi/Hifi](/Documentation/Diagrams/Lofi%20and%20Hifi)
+[Lofi/Hifi](/Documentation/Activity_3/lofi_hifi)
 
-[User Questionnaires](/Documentation/DiagramsQuestionnaire)
+[User Questionnaires](/Documentation/Activity_3/Questionnaire.pdf)
 
 ## Project Vlogs
 [Activity 1](https://youtu.be/6wL67tMxihg)
