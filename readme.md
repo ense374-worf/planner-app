@@ -28,6 +28,8 @@ Project planning and documents: https://github.com/ense374-worf/study-sense/tree
 
 [User Questionnaires](/Documentation/Activity_3/Questionnaire.pdf)
 
+[Vlog](https://youtu.be/KpzzaaRRZJQ)
+
 ## Project Vlogs
 [Activity 1](https://youtu.be/6wL67tMxihg)
 
