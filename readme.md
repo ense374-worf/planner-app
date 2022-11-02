@@ -23,7 +23,7 @@ Project planning and documents: https://github.com/ense374-worf/study-sense/tree
 
 ## Activity 3
 [Diagrams](/Documentation/Diagrams)
-[Lofi/Hifi](/Documentation/Diagrams/Lofi and Hifi)/Questionnaire
+[Lofi/Hifi](/Documentation/Diagrams/Lofi and Hifi)
 [User Questionnaires](/Documentation/DiagramsQuestionnaire)
 [Vlog](https://youtu.be/5bGlVlavNds)
 
