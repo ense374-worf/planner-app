@@ -23,7 +23,6 @@ Project planning and documents: https://github.com/ense374-worf/study-sense/tree
 
 ## Activity 3
 [Diagrams](/Documentation/Diagrams)
-[Documents](Documentation/Worf_Activity3_Questionnaire.pdf)
 
 ## Project Vlogs
 [Activity 1](https://youtu.be/6wL67tMxihg)
