@@ -1,1 +1,1 @@
-This folder contains all the project planning realated documents
+This folder contains all the project planning/diagramming/prototyping realated documents
