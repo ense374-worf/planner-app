@@ -15,18 +15,18 @@ Students have a lot on their plate. With 4, 5, or even 6 concurrent classes it c
 Project idea and vlog: https://youtu.be/6wL67tMxihg
 
 ## Activity 2 
-Project planning and documents: https://github.com/ense374-worf/study-sense/tree/main/Documentation
+[Project planning and documents](/documentation/project_docs)
 
 [Vlog](https://youtu.be/MiZjyk-VgVE)
 
 [Project Kanban & MVPs](https://github.com/orgs/ense374-worf/projects/2)
 
 ## Activity 3
-[Diagrams](/Documentation/Diagrams)
+[Diagrams](/documentation/diagrams)
 
-[Lofi/Hifi](/Documentation/Prototypes)
+[Lofi/Hifi](/documentation/prototypes)
 
-[User Questionnaires](/Documentation/Questionnaire.pdf)
+[User Questionnaires](/documentation/questionnaire.pdf)
 
 [Vlog](https://youtu.be/KpzzaaRRZJQ)
 
