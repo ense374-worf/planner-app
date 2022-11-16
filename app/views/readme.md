@@ -1,0 +1,1 @@
+Use this diectory along with /public (which maps to /public) to create the front-end
