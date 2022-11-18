@@ -1,16 +1,33 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const session = require('express-session');
+const passport = require('passport');
 
 const app = express();
 
 require('dotenv').config();
 
+const User = require('./models/User').Model;
+
+if(typeof process.env.SECRET === 'undefined') throw "ENV ERROR: Missing SECRET";
+app.use(session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: false
+}));
+
 app.use('/public', express.static('public'));
 app.use(express.urlencoded({ extended: true}));
 app.set('view engine', 'ejs');
 
-if(typeof process.env.MONGO_URI === 'undefined') throw "ENV ERROR: Missing MONGO_URI";
+app.use (passport.initialize());
+app.use (passport.session());
 
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+if(typeof process.env.MONGO_URI === 'undefined') throw "ENV ERROR: Missing MONGO_URI";
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connected to MongoDB'));
 
