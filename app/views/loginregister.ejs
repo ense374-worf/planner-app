@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/style2.css">
+
+    <title>Study Sense</title>
+</head>
+
+<body>
+    <div class="header">
+        <a href="/" class="logo"><img src="/public/img/logo.png" alt="logo" width="60" height="80"></a>
+        <a href="/about-us">About Us</a>
+        <a href="/contact">Contact</a>
+        <div class="header-right">
+            <a class="active" href="/login">Login/Signup</a>
+        </div>
+    </div>
+
+    <div class="item3">
+        <div class="container <%= (start === 'register') ? 'right-panel-active' : '' %>" id="container">
+            <div class="form-container sign-up-container">
+                <form action="/register" method="post">
+                    <h1>Create Account</h1>
+                    <input type="text" id="name" name="name" placeholder="Name"/>
+                    <input type="email" id="email" name="email" placeholder="Email"/>
+                    <input type="password" id="password" name="password" placeholder="Password"/>
+                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password"/>
+                    <button type="submit">Register</button>
+                </form>
+            </div>
+            <div class="form-container sign-in-container">
+                <form action="/login" method="post">
+                    <h1>Sign in</h1>
+                    <input type="email" id="email" name="email" placeholder="Email"/>
+                    <input type="password" id="password" name="password" placeholder="Password"/>
+                    <a href="#">Forgot your password?</a>
+                    <button type="submit">Sign In</button>
+                </form>
+            </div>
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <h1>Welcome!</h1>
+                        <p>Please login via the button below</p>
+                        <button class="ghost" id="signIn">Sign In</button>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <h1>Welcome!</h1>
+                        <p>Please use the button below to register</p>
+                        <button class="ghost" id="signUp">Register</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/public/js/loginsignup.js"></script>
+</body>
+
+</html>
