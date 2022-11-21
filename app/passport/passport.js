@@ -9,7 +9,7 @@ passport.use(
 
         User.findOne({ email }) //Check if user exists
             .then(user => {
-                if(!user) return done(null, false, { message: 'Username or password is incorrect!' });
+                if(!user) return done(null, false);
 
                 //Check password
                 bcrypt.compare(password, user.password, (err, isMatch) => {
@@ -19,7 +19,7 @@ passport.use(
                         return done(null, user);
                     }
                     
-                    return done(null, false, { message: 'Username or password is incorrect!' }); 
+                    return done(null, false); 
                 });
 
             });
