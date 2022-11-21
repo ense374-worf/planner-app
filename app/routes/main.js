@@ -2,19 +2,19 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    res.render('home');
+    res.render('landing');
 });
 
 router.get('/login', (req, res) => {
-    res.render('loginRegister', {start: 'login'});
+    res.render('loginregister', {start: 'login'});
 });
 
 router.get('/register', (req, res) => {
-    res.render('loginRegister', {start: 'register'});
+    res.render('loginregister', {start: 'register'});
 });
 
 router.get('/about-us', (req, res) => {
-    res.render('/aboutUs');
+    res.render('about-us');
 });
 
 router.get('/contact', (req, res) => {
