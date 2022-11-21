@@ -69,6 +69,14 @@ router.post('/register', async (req, res) => {
     });
 });
 
+router.get('/logout', (req, res, next) => {
+    req.logout(err => {
+        if(err) return next(err);
+
+        res.redirect('/');
+    });
+});
+
 router.get('/about-us', (req, res) => {
     res.render('about-us');
 });
