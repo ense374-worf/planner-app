@@ -3,9 +3,11 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require('passport');
 
+require('dotenv').config();
+
 const app = express();
 
-require('dotenv').config();
+require('./passport/passport');
 
 if(typeof process.env.SECRET === 'undefined') throw "ENV ERROR: Missing SECRET";
 app.use(session({
@@ -13,6 +15,9 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/public', express.static('public'));
 app.use(express.urlencoded({ extended: true}));
