@@ -317,7 +317,7 @@ body {
 
 
 
-  input[type=text], select, textarea {
+  input, textarea {
 	width: 100%;
 	padding: 12px;
 	border: 1px solid #ccc;
@@ -328,7 +328,7 @@ body {
 	resize: vertical;
   }
   
-  input[type=submit] {
+  form button.submit {
 	background-color: #04AA6D;
 	color: white;
 	padding: 12px 20px;

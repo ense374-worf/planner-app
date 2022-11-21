@@ -5,20 +5,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="/public/css/style2.css">
     
     <title>Study Sense</title>
 </head>
 
 <body>
-
     <div class="grid-container">
         <div class="header">
-            <a href="home.html" class="logo"><img src="logo.png" width="60" height="80""></a>
-            <a href=" about.html">About Us</a>
-            <a href="contact.html">Contact</a>
+            <a href="/" class="logo"><img src="/public/img/logo.png" alt="logo" width="60" height="80"></a>
+            <a href="/about-us">About Us</a>
+            <a href="/contact">Contact</a>
             <div class="header-right">
-                <a class="active" href="loginsignup.html">Login/Signup</a>
+                <a class="active" href="/login">Login/Signup</a>
             </div>
  
         </div>
@@ -31,36 +30,30 @@
         <br><br><br>
         <div class="row">
 
-
-
             <div class="column">
                 <h2>We are here to help!</h2>
                 contact info here like adress or contact
 
             </div>
 
-
-
-            <div class=" column">
+            <div class="column">
                 <div class="container">
-                    <form action="/action_page.php">
+                    <!-- TODO: Fix this form (both content and functionality) -->
+                    <form action="/contact" method="post">
                       <h2>Send Us a Message</h2>
-                      <input type="text" id="fname" name="firstname" placeholder="First Name">
-                  
+
+                      <input type="text" id="name" name="name" placeholder="Name">
                       
-                      <input type="text" id="lname" name="lastname" placeholder="Last name">
+                      <input type="email" id="email" name="email" placeholder="Email">
                   
                       <input type="text" id="subject" name="subject" placeholder="Subject">
-                  
                       
-                      <textarea id="subject" name="subject" placeholder="Your Message" style="height:200px"></textarea>
+                      <textarea id="body" name="body" placeholder="Your Message" style="height:200px"></textarea>
                   
-                      <input type="submit" value="Submit">
+                      <button class="submit" type="submit">Submit</button>
                     </form>
                   </div>
             </div>
-
-
 </body>
 
 </html>
