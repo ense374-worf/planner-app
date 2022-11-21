@@ -7,8 +7,6 @@ const app = express();
 
 require('dotenv').config();
 
-const User = require('./models/User').Model;
-
 if(typeof process.env.SECRET === 'undefined') throw "ENV ERROR: Missing SECRET";
 app.use(session({
     secret: process.env.SECRET,
@@ -19,13 +17,6 @@ app.use(session({
 app.use('/public', express.static('public'));
 app.use(express.urlencoded({ extended: true}));
 app.set('view engine', 'ejs');
-
-app.use (passport.initialize());
-app.use (passport.session());
-
-passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
 
 if(typeof process.env.MONGO_URI === 'undefined') throw "ENV ERROR: Missing MONGO_URI";
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
