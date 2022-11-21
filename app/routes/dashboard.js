@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', (req, res) => {
+const {verifyAuthentication} = require('../passport/auth');
+
+router.get('/', verifyAuthentication, (req, res) => {
     res.sendStatus(200);
 });
 
-router.get('/:semId', (req, res) => {
+router.get('/:semId', verifyAuthentication, (req, res) => {
     res.sendStatus(200);
 });
 

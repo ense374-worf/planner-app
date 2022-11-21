@@ -1,1 +1,0 @@
-Hosts static files for the front-end
