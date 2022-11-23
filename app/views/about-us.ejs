@@ -3,44 +3,40 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/css/style.css">
-    
-    <title>Study Sense</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <title>Study Sense - About Us</title>
 </head>
 
 <body>
-    <div class="grid-container">
-        <%- include('./partials/navbar.ejs'); %>
-        
-        <br><br><br>
-
-        <div class="main">
-            <h1>Our Team</h1>
-        </div>
+    <%- include('./partials/navbar.ejs'); %>
+    <div class="container text-center pt-5">
+        <h1><strong>Our Team</strong></h1>
 
         <br><br><br>
+
+
         <div class="row">
-            <div class="column">
+            <div class="col-4">
                 <h3>Kevin Huang</h3>
-                <img src="/public/img/kevin.jpg" width="150" height="210">
+                <img class="rounded" src="/public/img/kevin.jpg" alt="kevin" width="70%">
                 <h3>Front-end Developer</h3>
             </div>
-            <div class="column">
+            <div class="col-4">
                 <h3>Cameron Oehler</h3>
-                <img src="/public/img/logo.png" width="60" height="80">
+                <img class="rounded" src="/public/img/logo.png" alt="cameron" width="70%">
+                <h3>Full-Stack Developer</h3>
             </div>
-            <div class="column">
-                <h3>team member 3</h3>
-                <img src="/public/img/logo.png" width="60" height="80">
+            <div class="col-4">
+                <h3>Team member 3</h3>
+                <img class="rounded" src="/public/img/logo.png" alt="placeholder" width="70%">
             </div>
           </div>
           <br><br><br>  
-          <div class="main">
-            <!-- TODO: Finish this -->
-            <p>Hello! This is the team that made this project possible, (we talk about stuff)</p>
-        </div>
+
+        <!-- TODO: Finish this -->
+        <p>Hello! This is the team that made this project possible, (we talk about stuff)</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
 
 </html>
