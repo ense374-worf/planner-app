@@ -15,8 +15,30 @@
                 <h2><strong>We are here to help!</strong></h2>
                 <p>TODO: Contact info goes here</p>
             </div>
-            <div class="col-6">
-                <!-- {Name, email, subject, message} POST to /contact -->
+            <div class="col-6 pt-5">
+                <h4 class="text-center">Send us a message!</h4>
+                <div class="bg-light p-3 rounded">
+                    <!-- {Name, email, subject, message} POST to /contact -->
+                    <form action="/contact" method="post">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" name="name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Subject</label>
+                            <input type="text" class="form-control" id="subject" name="subject">
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+                        </div> 
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
