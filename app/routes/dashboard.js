@@ -120,7 +120,17 @@ router.get('/:semId', verifyAuthentication, loadSemester, (req, res) => {
     }).catch(err => console.error(err));
 });
 
-//TODO: Edit semester
+router.get('/:semId/edit', verifyAuthentication, loadSemester, (req, res) => {
+    //TODO
+});
+
+router.post('/:semId/edit', verifyAuthentication, loadSemester, (req, res) => {
+    //TODO
+});
+
+router.get('/:semId/delete', verifyAuthentication, loadSemester, (req, res) => {
+    //TODO
+});
 
 router.get('/:semId/new', verifyAuthentication, loadSemester, (req, res) => {
     Class.find({semester: req.semester.id})
@@ -196,11 +206,19 @@ router.post('/:semId/assignment/:assignmentId', verifyAuthentication, loadSemest
     //TODO
 });
 
+router.get('/:semId/assignment/:assignmentId/delete', verifyAuthentication, loadSemester, (req, res) => {
+    //TODO
+});
+
 router.get('/:semId/exam/:examtId', verifyAuthentication, loadSemester, (req, res) => {
     //TODO
 });
 
 router.post('/:semId/exam/:examId', verifyAuthentication, loadSemester, (req, res) => {
+    //TODO
+});
+
+router.get('/:semId/exam/:examId/delete', verifyAuthentication, loadSemester, (req, res) => {
     //TODO
 });
 
@@ -243,6 +261,10 @@ router.post('/:semId/editClasses/new', verifyAuthentication, loadSemester, (req,
 });
 
 router.post('/:semId/editClasses/:classId', verifyAuthentication, loadSemester, loadClass, (req, res) => {
+    //TODO
+});
+
+router.get('/:semId/editClasses/:classId/delete', verifyAuthentication, loadSemester, loadClass, (req, res) => {
     //TODO
 });
 
