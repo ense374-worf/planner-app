@@ -43,7 +43,31 @@ const loadClass = (req, res, next) => {
                 req.class = classObj;
                 return next();
             }
-            return res.redirect(`/${req.semester.id}/editClasses`);
+            return res.redirect(`/dashboard/${req.semester.id}/editClasses`);
+        }).catch(err => console.error(err));
+}
+
+//Middlewear to grab assignment data if user is permitted to view it (prereq: middlewear loadClass)
+const loadAssignment = (req, res, next) => {
+    Assignment.findOne({_id: req.params.assignmentId, class: req.class.id})
+        .then(assignment => {
+            if(assignment){
+                req.assignment = assignment;
+                return next();
+            }
+            return res.redirect(`/dashboard/${req.semester.id}`);
+        }).catch(err => console.error(err));
+}
+
+//Middlewear to grab exam data if user is permitted to view it (prereq: middlewear loadClass)
+const loadExam = (req, res, next) => {
+    Exam.findOne({_id: req.params.examId, class: req.class.id})
+        .then(exam => {
+            if(exam){
+                req.exam = exam;
+                return next();
+            }
+            return res.redirect(`/dashboard/${req.semester.id}`);
         }).catch(err => console.error(err));
 }
 
@@ -229,28 +253,38 @@ router.post('/:semId/new/exam', verifyAuthentication, loadSemester, verifyClass,
         }).catch(err => console.error(err));
 });
 
-router.get('/:semId/assignment/:assignmentId', verifyAuthentication, loadSemester, (req, res) => {
+router.get('/:semId/assignment/:assignmentId', verifyAuthentication, loadSemester, loadAssignment, (req, res) => {
     //TODO
 });
 
-router.post('/:semId/assignment/:assignmentId', verifyAuthentication, loadSemester, (req, res) => {
+router.post('/:semId/assignment/:assignmentId', verifyAuthentication, loadSemester, loadAssignment, (req, res) => {
     //TODO
 });
 
-router.get('/:semId/assignment/:assignmentId/delete', verifyAuthentication, loadSemester, (req, res) => {
+router.get('/:semId/assignment/:assignmentId/delete', verifyAuthentication, loadSemester, loadAssignment, (req, res) => {
+    Assignment.findByIdAndDelete(req.assignment.id)
+        .then(() => {
+
+            res.redirect(`/dashboard/${req.semester.id}`);
+
+        }).catch(err => console.error(err));
+});
+
+router.get('/:semId/exam/:examId', verifyAuthentication, loadSemester, loadExam, (req, res) => {
     //TODO
 });
 
-router.get('/:semId/exam/:examtId', verifyAuthentication, loadSemester, (req, res) => {
+router.post('/:semId/exam/:examId', verifyAuthentication, loadSemester, loadExam, (req, res) => {
     //TODO
 });
 
-router.post('/:semId/exam/:examId', verifyAuthentication, loadSemester, (req, res) => {
-    //TODO
-});
+router.get('/:semId/exam/:examId/delete', verifyAuthentication, loadSemester, loadExam, (req, res) => {
+    Exam.findByIdAndDelete(req.assignment.id)
+        .then(() => {
 
-router.get('/:semId/exam/:examId/delete', verifyAuthentication, loadSemester, (req, res) => {
-    //TODO
+            res.redirect(`/dashboard/${req.semester.id}`);
+
+        }).catch(err => console.error(err));
 });
 
 router.get('/:semId/editClasses', verifyAuthentication, loadSemester, (req, res) => {
