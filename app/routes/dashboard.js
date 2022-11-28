@@ -129,7 +129,38 @@ router.post('/:semId/edit', verifyAuthentication, loadSemester, (req, res) => {
 });
 
 router.get('/:semId/delete', verifyAuthentication, loadSemester, (req, res) => {
-    //TODO
+    Semester.findByIdAndDelete(req.semester.id)
+        .then(() => {
+
+            Class.find({semester: req.semester.id})
+                .then(classes => {
+
+                    let classIds = [];
+                    classes.forEach((classObj => {
+                        classIds.push(classObj.id);
+                    }));
+
+                    Class.deleteMany({semester: req.semester.id})
+                        .then(() => {
+
+                            Assignment.deleteMany({class: {$in: classIds}})
+                                .then(() => {
+
+                                    Exam.deleteMany({class: {$in: classIds}})
+                                        .then(() => {
+
+                                            res.redirect('/dashboard');
+
+                                        }).catch(err => console.error(err));
+
+                                }).catch(err => console.error(err));
+
+                        }).catch(err => console.error(err));
+                    
+
+                }).catch(err => console.error(err));
+        
+            }).catch(err => console.log(err));
 });
 
 router.get('/:semId/new', verifyAuthentication, loadSemester, (req, res) => {
@@ -265,7 +296,22 @@ router.post('/:semId/editClasses/:classId', verifyAuthentication, loadSemester, 
 });
 
 router.get('/:semId/editClasses/:classId/delete', verifyAuthentication, loadSemester, loadClass, (req, res) => {
-    //TODO
+    Class.findByIdAndDelete(req.class.id)
+        .then(() => {
+
+            Assignment.deleteMany({class: req.class.id})
+                .then(() => {
+
+                    Exam.deleteMany({class: req.class.id})
+                        .then(() => {
+
+                            res.redirect(`/dashboard/${req.semester.id}`);
+
+                        }).catch(err => console.error(err));
+
+                }).catch(err => console.error(err));
+
+        }).catch(err => console.error(err));
 });
 
 module.exports = router;
