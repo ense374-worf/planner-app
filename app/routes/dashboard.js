@@ -39,7 +39,7 @@ const verifyClass = (req, res, next) => {
 const loadClass = (req, res, next) => {
     Class.findOne({_id: req.params.classId, semester: req.semester.id})
         .then(classObj => {
-            if(semester){
+            if(classObj){
                 req.class = classObj;
                 return next();
             }
@@ -47,28 +47,52 @@ const loadClass = (req, res, next) => {
         }).catch(err => console.error(err));
 }
 
-//Middlewear to grab assignment data if user is permitted to view it (prereq: middlewear loadClass)
+//Middlewear to grab assignment data if user is permitted to view it (prereq: middlewear loadSemester)
 const loadAssignment = (req, res, next) => {
-    Assignment.findOne({_id: req.params.assignmentId, class: req.class.id})
+    Assignment.findById(req.params.assignmentId)
         .then(assignment => {
+
             if(assignment){
-                req.assignment = assignment;
-                return next();
+                Class.findById(assignment.class)
+                    .then(classObj => {
+
+                        if(classObj.semester == req.semester.id){
+                            req.assignment = assignment;
+                            return next();
+                        }
+                        return res.redirect(`/dashboard/${req.semester.id}`);
+
+                    }).catch(err => console.error(err));
             }
-            return res.redirect(`/dashboard/${req.semester.id}`);
+            else{
+                return res.redirect(`/dashboard/${req.semester.id}`);
+            }
+        
         }).catch(err => console.error(err));
 }
 
-//Middlewear to grab exam data if user is permitted to view it (prereq: middlewear loadClass)
+//Middlewear to grab exam data if user is permitted to view it (prereq: middlewear loadSemester)
 const loadExam = (req, res, next) => {
-    Exam.findOne({_id: req.params.examId, class: req.class.id})
+    Exam.findById(req.params.examId)
         .then(exam => {
+
             if(exam){
-                req.exam = exam;
-                return next();
+                Class.findById(exam.class)
+                    .then(classObj => {
+
+                        if(classObj.semester == req.semester.id){
+                            req.exam = exam;
+                            return next();
+                        }
+                        return res.redirect(`/dashboard/${req.semester.id}`);
+
+                    }).catch(err => console.error(err));
             }
-            return res.redirect(`/dashboard/${req.semester.id}`);
-        }).catch(err => console.error(err));
+            else{
+                return res.redirect(`/dashboard/${req.semester.id}`);
+            }
+    
+    }).catch(err => console.error(err));
 }
 
 router.get('/', verifyAuthentication, (req, res) => {
@@ -265,7 +289,7 @@ router.get('/:semId/assignment/:assignmentId/delete', verifyAuthentication, load
     Assignment.findByIdAndDelete(req.assignment.id)
         .then(() => {
 
-            res.redirect(`/dashboard/${req.semester.id}`);
+            res.redirect(`/dashboard/${req.semester.id}?done`);
 
         }).catch(err => console.error(err));
 });
@@ -279,7 +303,7 @@ router.post('/:semId/exam/:examId', verifyAuthentication, loadSemester, loadExam
 });
 
 router.get('/:semId/exam/:examId/delete', verifyAuthentication, loadSemester, loadExam, (req, res) => {
-    Exam.findByIdAndDelete(req.assignment.id)
+    Exam.findByIdAndDelete(req.exam.id)
         .then(() => {
 
             res.redirect(`/dashboard/${req.semester.id}`);
