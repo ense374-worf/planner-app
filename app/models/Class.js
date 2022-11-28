@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
 
-const SemesterSchema = require('./Semester').Schema;
-
 const ClassSchema = new mongoose.Schema({
     name: String,
     prof: String,
     location: String,
-    semester: SemesterSchema,
+    color: String,
+    semester: mongoose.Schema.Types.ObjectId,
     created: {
         type: Date,
         default: Date.now
@@ -15,4 +14,4 @@ const ClassSchema = new mongoose.Schema({
 
 const Class = mongoose.model('Class', ClassSchema);
 
-module.exports = {Model: Class, Schema: ClassSchema};
+module.exports = Class;
