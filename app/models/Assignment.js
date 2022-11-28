@@ -5,7 +5,10 @@ const AssignmentSchema = new mongoose.Schema({
     desc: String,
     estimatedDays: Number,
     due: Date,
-    progress: Number,
+    progress: {
+        type: Number,
+        default: 0
+    },
     class: mongoose.Schema.Types.ObjectId,
     created: {
         type: Date,
