@@ -145,17 +145,10 @@ router.get('/:semId', verifyAuthentication, loadSemester, (req, res) => {
                     datetime: {$gt: Date.now()}
                 }).then(exams => {
     
-                    return res.send({
-                        user: req.user,
-                        semester: req.semester,
-                        classes,
-                        assignments,
-                        exams
-                    }); //TODO: Remove this and switch to .render
-    
                     res.render('temp/dashboard', {
                         user: req.user,
                         semester: req.semester,
+                        classes,
                         assignments,
                         exams
                     });
@@ -167,19 +160,7 @@ router.get('/:semId', verifyAuthentication, loadSemester, (req, res) => {
     }).catch(err => console.error(err));
 });
 
-router.get('/:semId/edit', verifyAuthentication, loadSemester, (req, res) => {
-    return res.send({
-        user: req.user,
-        semester: req.semester
-    }); //TODO: Remove this and switch to .render
-
-    res.render('temp/editSemester', {
-        user: req.user,
-        semester: req.semester
-    });
-});
-
-router.post('/:semId/edit', verifyAuthentication, loadSemester, (req, res) => {
+router.post('/:semId', verifyAuthentication, loadSemester, (req, res) => {
     const {name} = req.body;
 
     Semester.findByIdAndUpdate(req.semester.id, {name})
@@ -223,6 +204,86 @@ router.get('/:semId/delete', verifyAuthentication, loadSemester, (req, res) => {
                 }).catch(err => console.error(err));
         
             }).catch(err => console.log(err));
+});
+
+router.get('/:semId/editClasses', verifyAuthentication, loadSemester, (req, res) => {
+    Class.find({semester: req.semester.id})
+        .then(classes => {
+            res.render('temp/editClasses', {
+                user: req.user,
+                semester: req.semester,
+                classes
+            });
+        }).catch(err => console.error(err));
+});
+
+router.post('/:semId/editClasses/new', verifyAuthentication, loadSemester, (req, res) => {
+    const {name, prof, location, color} = req.body;
+
+    const errors = [];
+
+    const colorRegex = /^#[0-9A-Fa-f]{6}$/;
+
+    if(!colorRegex.test(color)) errors.push('Color is not in correct format');
+
+    if(errors.length > 0){
+        return res.redirect(`/dashboard/${req.semester.id}/editClasses`);
+    }
+
+    const newClass = new Class({
+        name,
+        prof,
+        location,
+        color,
+        semester: req.semester.id
+    });
+
+    newClass.save()
+        .then(() => {
+
+            res.redirect(`/dashboard/${req.semester.id}/editClasses`);
+
+        }).catch(err => console.error(err));
+});
+
+router.post('/:semId/editClasses/:classId', verifyAuthentication, loadSemester, loadClass, (req, res) => {
+    const {name, prof, location, color} = req.body;
+
+    const errors = [];
+
+    const colorRegex = /^#[0-9A-Fa-f]{6}$/;
+
+    if(!colorRegex.test(color)) errors.push('Color is not in correct format');
+
+    if(errors.length > 0){
+        return res.redirect(`/dashboard/${req.semester.id}/editClasses`);
+    }
+
+    Class.findByIdAndUpdate(req.class.id, {name, prof, location, color})
+        .then(() => {
+
+            res.redirect(`/dashboard/${req.semester.id}/editClasses`);
+
+        }).catch(err => console.error(err));
+});
+
+router.get('/:semId/editClasses/:classId/delete', verifyAuthentication, loadSemester, loadClass, (req, res) => {
+    Class.findByIdAndDelete(req.class.id)
+        .then(() => {
+
+            Assignment.deleteMany({class: req.class.id})
+                .then(() => {
+
+                    Exam.deleteMany({class: req.class.id})
+                        .then(() => {
+
+                            res.redirect(`/dashboard/${req.semester.id}/editClasses`);
+
+                        }).catch(err => console.error(err));
+
+                }).catch(err => console.error(err));
+
+        }).catch(err => console.error(err));
 });
 
 router.get('/:semId/new', verifyAuthentication, loadSemester, (req, res) => {
@@ -352,86 +413,6 @@ router.get('/:semId/exam/:examId/delete', verifyAuthentication, loadSemester, lo
         .then(() => {
 
             res.redirect(`/dashboard/${req.semester.id}`);
-
-        }).catch(err => console.error(err));
-});
-
-router.get('/:semId/editClasses', verifyAuthentication, loadSemester, (req, res) => {
-    Class.find({semester: req.semester.id})
-        .then(classes => {
-            res.render('temp/editClasses', {
-                user: req.user,
-                semester: req.semester,
-                classes
-            });
-        }).catch(err => console.error(err));
-});
-
-router.post('/:semId/editClasses/new', verifyAuthentication, loadSemester, (req, res) => {
-    const {name, prof, location, color} = req.body;
-
-    const errors = [];
-
-    const colorRegex = /^#[0-9A-Fa-f]{6}$/;
-
-    if(!colorRegex.test(color)) errors.push('Color is not in correct format');
-
-    if(errors.length > 0){
-        return res.redirect(`/dashboard/${req.semester.id}/editClasses`);
-    }
-
-    const newClass = new Class({
-        name,
-        prof,
-        location,
-        color,
-        semester: req.semester.id
-    });
-
-    newClass.save()
-        .then(() => {
-
-            res.redirect(`/dashboard/${req.semester.id}/editClasses`);
-
-        }).catch(err => console.error(err));
-});
-
-router.post('/:semId/editClasses/:classId', verifyAuthentication, loadSemester, loadClass, (req, res) => {
-    const {name, prof, location, color} = req.body;
-
-    const errors = [];
-
-    const colorRegex = /^#[0-9A-Fa-f]{6}$/;
-
-    if(!colorRegex.test(color)) errors.push('Color is not in correct format');
-
-    if(errors.length > 0){
-        return res.redirect(`/dashboard/${req.semester.id}/editClasses`);
-    }
-
-    Class.findByIdAndUpdate(req.class.id, {name, prof, location, color})
-        .then(() => {
-
-            res.redirect(`/dashboard/${req.semester.id}/editClasses`);
-
-        }).catch(err => console.error(err));
-});
-
-router.get('/:semId/editClasses/:classId/delete', verifyAuthentication, loadSemester, loadClass, (req, res) => {
-    Class.findByIdAndDelete(req.class.id)
-        .then(() => {
-
-            Assignment.deleteMany({class: req.class.id})
-                .then(() => {
-
-                    Exam.deleteMany({class: req.class.id})
-                        .then(() => {
-
-                            res.redirect(`/dashboard/${req.semester.id}`);
-
-                        }).catch(err => console.error(err));
-
-                }).catch(err => console.error(err));
 
         }).catch(err => console.error(err));
 });
