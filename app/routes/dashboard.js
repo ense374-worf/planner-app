@@ -100,10 +100,31 @@ const loadExam = (req, res, next) => {
 router.get('/', verifyAuthentication, (req, res) => {
     Semester.find({user: req.user})
         .then(semesters => {
+
+            let {filter, sort} = req.query;
+
+            if(!filter) filter = 'all';
+            if(!sort) sort = 'descending';
+
+            if(sort === 'descending'){
+                semesters.sort((a, b) => b.created - a.created);
+            }
+
+            if(filter === 'completed'){
+                semesters = semesters.filter(semester => semester.completed);
+            }else if(filter === 'active'){
+                semesters = semesters.filter(semester => !semester.completed);
+            }
+
             res.render(`${viewsFolder}/semesterSelect`,{
                 user: req.user,
-                semesters
+                semesters,
+                options: {
+                    filter,
+                    sort
+                }
             });
+
         }).catch(err => console.error(err));
 });
 
@@ -163,6 +184,15 @@ router.post('/:semId', verifyAuthentication, loadSemester, (req, res) => {
         .then(() => {
 
             res.redirect(`/dashboard`);
+
+        }).catch(err => console.error(err));
+});
+
+router.get('/:semId/mark', verifyAuthentication, loadSemester, (req, res) => {
+    Semester.findByIdAndUpdate(req.semester.id, {completed: !req.semester.completed})
+        .then(() => {
+
+            res.redirect('/dashboard');
 
         }).catch(err => console.error(err));
 });
