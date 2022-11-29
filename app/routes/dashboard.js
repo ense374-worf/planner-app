@@ -49,7 +49,7 @@ const loadClass = (req, res, next) => {
 
 //Middlewear to grab assignment data if user is permitted to view it (prereq: middlewear loadSemester)
 const loadAssignment = (req, res, next) => {
-    Assignment.findById(req.params.assignmentId)
+    Assignment.findById(req.params.assignId)
         .then(assignment => {
 
             if(assignment){
@@ -98,7 +98,7 @@ const loadExam = (req, res, next) => {
 router.get('/', verifyAuthentication, (req, res) => {
     Semester.find({user: req.user})
         .then(semesters => {
-            res.render('dashboard/semesterSelect',{
+            res.render('temp/semesterSelect',{
                 user: req.user,
                 semesters
             });
@@ -106,7 +106,7 @@ router.get('/', verifyAuthentication, (req, res) => {
 });
 
 router.get('/new', verifyAuthentication, (req, res) => {
-    res.render('dashboard/newSemester',{
+    res.render('temp/newSemester',{
         user: req.user
     });
 });
@@ -145,7 +145,7 @@ router.get('/:semId', verifyAuthentication, loadSemester, (req, res) => {
                     datetime: {$gt: Date.now()}
                 }).then(exams => {
     
-                    res.send({
+                    return res.send({
                         user: req.user,
                         semester: req.semester,
                         classes,
@@ -153,13 +153,12 @@ router.get('/:semId', verifyAuthentication, loadSemester, (req, res) => {
                         exams
                     }); //TODO: Remove this and switch to .render
     
-                    /*
-                    res.render('dashboard/dashboard', {
+                    res.render('temp/dashboard', {
                         user: req.user,
                         semester: req.semester,
                         assignments,
                         exams
-                    });*/
+                    });
             
                     }).catch(err => console.log(err));
     
@@ -169,11 +168,26 @@ router.get('/:semId', verifyAuthentication, loadSemester, (req, res) => {
 });
 
 router.get('/:semId/edit', verifyAuthentication, loadSemester, (req, res) => {
-    //TODO
+    return res.send({
+        user: req.user,
+        semester: req.semester
+    }); //TODO: Remove this and switch to .render
+
+    res.render('temp/editSemester', {
+        user: req.user,
+        semester: req.semester
+    });
 });
 
 router.post('/:semId/edit', verifyAuthentication, loadSemester, (req, res) => {
-    //TODO
+    const {name} = req.body;
+
+    Semester.findByIdAndUpdate(req.semester.id, {name})
+        .then(() => {
+
+            res.redirect(`/dashboard`);
+
+        }).catch(err => console.error(err));
 });
 
 router.get('/:semId/delete', verifyAuthentication, loadSemester, (req, res) => {
@@ -214,7 +228,7 @@ router.get('/:semId/delete', verifyAuthentication, loadSemester, (req, res) => {
 router.get('/:semId/new', verifyAuthentication, loadSemester, (req, res) => {
     Class.find({semester: req.semester.id})
         .then(classes => {
-            res.render('dashboard/newAssignmentExam', {
+            res.render('temp/newAssignmentExam', {
                 user: req.user,
                 semester: req.semester,
                 classes
@@ -251,6 +265,41 @@ router.post('/:semId/new/assignment', verifyAuthentication, loadSemester, verify
         }).catch(err => console.error(err));
 });
 
+router.post('/:semId/assignment/:assignId', verifyAuthentication, loadSemester, verifyClass, loadAssignment, (req, res) => {
+    const {name, desc, estimatedDays, due, classId, progress} = req.body;
+
+    let errors = [];
+
+    const parsedEstimatedDays = parseInt(estimatedDays);
+    const parsedDue = Date.parse(due);
+    const parsedProgress = parseInt(progress);
+
+    if(isNaN(parsedEstimatedDays)) errors.push('Estimated Days to Complete must be a number');
+    if(isNaN(parsedDue)) errors.push('Due Date must be a valid date');
+    if(isNaN(parsedProgress)) errors.push('Progress must be a number');
+    if(parsedProgress > 100 || parsedProgress < 0) errors.push('Progress must be 0-100');
+
+    if(errors.length > 0){
+        return res.redirect(`/dashboard/${req.semester.id}`);
+    }
+
+    Assignment.findByIdAndUpdate(req.assignment.id, {name, desc, estimatedDays: parsedEstimatedDays, due: parsedDue, progress: parsedProgress, class: classId})
+        .then(() => {
+
+            res.redirect(`/dashboard/${req.semester.id}`);
+
+        }).catch(err => console.error(err));
+});
+
+router.get('/:semId/assignment/:assignId/delete', verifyAuthentication, loadSemester, loadAssignment, (req, res) => {
+    Assignment.findByIdAndDelete(req.assignment.id)
+        .then(() => {
+
+            res.redirect(`/dashboard/${req.semester.id}`);
+
+        }).catch(err => console.error(err));
+});
+
 router.post('/:semId/new/exam', verifyAuthentication, loadSemester, verifyClass, (req, res) => {
     const {name, desc, datetime, classId} = req.body;
 
@@ -277,29 +326,25 @@ router.post('/:semId/new/exam', verifyAuthentication, loadSemester, verifyClass,
         }).catch(err => console.error(err));
 });
 
-router.get('/:semId/assignment/:assignmentId', verifyAuthentication, loadSemester, loadAssignment, (req, res) => {
-    //TODO
-});
+router.post('/:semId/exam/:examId', verifyAuthentication, loadSemester, verifyClass, loadExam, (req, res) => {
+    const {name, desc, datetime, classId} = req.body;
 
-router.post('/:semId/assignment/:assignmentId', verifyAuthentication, loadSemester, loadAssignment, (req, res) => {
-    //TODO
-});
+    const errors = [];
 
-router.get('/:semId/assignment/:assignmentId/delete', verifyAuthentication, loadSemester, loadAssignment, (req, res) => {
-    Assignment.findByIdAndDelete(req.assignment.id)
+    const parsedDatetime = Date.parse(datetime);
+
+    if(isNaN(parsedDatetime)) errors.push('Exam date must be a valid date');
+
+    if(errors.length > 0){
+        return res.redirect(`/dashboard/${req.semester.id}`);
+    }
+
+    Exam.findByIdAndUpdate(req.exam.id, {name, desc, datetime: parsedDatetime, class: classId})
         .then(() => {
 
-            res.redirect(`/dashboard/${req.semester.id}?done`);
+            res.redirect(`/dashboard/${req.semester.id}`);
 
         }).catch(err => console.error(err));
-});
-
-router.get('/:semId/exam/:examId', verifyAuthentication, loadSemester, loadExam, (req, res) => {
-    //TODO
-});
-
-router.post('/:semId/exam/:examId', verifyAuthentication, loadSemester, loadExam, (req, res) => {
-    //TODO
 });
 
 router.get('/:semId/exam/:examId/delete', verifyAuthentication, loadSemester, loadExam, (req, res) => {
@@ -314,7 +359,7 @@ router.get('/:semId/exam/:examId/delete', verifyAuthentication, loadSemester, lo
 router.get('/:semId/editClasses', verifyAuthentication, loadSemester, (req, res) => {
     Class.find({semester: req.semester.id})
         .then(classes => {
-            res.render('dashboard/editClasses', {
+            res.render('temp/editClasses', {
                 user: req.user,
                 semester: req.semester,
                 classes
@@ -345,12 +390,31 @@ router.post('/:semId/editClasses/new', verifyAuthentication, loadSemester, (req,
 
     newClass.save()
         .then(() => {
+
             res.redirect(`/dashboard/${req.semester.id}/editClasses`);
+
         }).catch(err => console.error(err));
 });
 
 router.post('/:semId/editClasses/:classId', verifyAuthentication, loadSemester, loadClass, (req, res) => {
-    //TODO
+    const {name, prof, location, color} = req.body;
+
+    const errors = [];
+
+    const colorRegex = /^#[0-9A-Fa-f]{6}$/;
+
+    if(!colorRegex.test(color)) errors.push('Color is not in correct format');
+
+    if(errors.length > 0){
+        return res.redirect(`/dashboard/${req.semester.id}/editClasses`);
+    }
+
+    Class.findByIdAndUpdate(req.class.id, {name, prof, location, color})
+        .then(() => {
+
+            res.redirect(`/dashboard/${req.semester.id}/editClasses`);
+
+        }).catch(err => console.error(err));
 });
 
 router.get('/:semId/editClasses/:classId/delete', verifyAuthentication, loadSemester, loadClass, (req, res) => {
