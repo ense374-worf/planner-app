@@ -32,7 +32,7 @@
                                     aria-label="Search" aria-describedby="search-addon" />
                                 <button type="button" class="btn btn-outline-primary">Search</button>
                             </div>
-                            <br />  
+                            <br />
 
                             <form class="row row-cols-lg-auto g-3 justify-content-center mb-4 pb-2">
                                 <div class="col-12">
@@ -42,19 +42,33 @@
                                         <label class="form-label" for="form1"></label>
                                     </div>
                                 </div>
-
-
-
-
+                                
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-warning">Add Table</button>
                                 </div>
                             </form>
 
+
+                            <div class="d-flex justify-content-end align-items-center mb-4 pt-2 pb-3">
+                                <p class="small mb-0 me-2 text-muted">Filter</p>
+                                <select class="select">
+                                    <option value="1">All</option>
+                                    <option value="2">Completed</option>
+                                    <option value="3">Active</option>
+                                </select>
+                                <p class="small mb-0 ms-4 me-2 text-muted">Sort</p>
+                                <select class="select">
+                                    <option value="1">Date ascending</option>
+                                    <option value="2">Date descending</option>
+                                </select>
+                            </div>
+
+
+
                             <table class="table mb-4">
                                 <thead>
                                     <tr>
-                                        <th scope="col">No.</th>
+                                        <th scope="col">Active/Compeleted</th>
                                         <th scope="col">Table Name</th>
                                         <th scope="col">Date Created</th>
                                         <th scope="col">Actions</th>
@@ -62,7 +76,12 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th scope="row">1</th>
+                                        <th scope="row">
+                                            <div class="form-check">
+                                                <input class="form-check-input me-0 " type="checkbox" value=""
+                                                    id="flexCheckChecked1" aria-label="..." />
+                                            </div>
+                                        </th>
                                         <td>Fall 2022</td>
                                         <td>2022-10-08</td>
                                         <td>
@@ -71,7 +90,12 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">2</th>
+                                        <th scope="row">
+                                            <div class="form-check align-items-center">
+                                                <input class="form-check-input me-0 " type="checkbox" value=""
+                                                    id="flexCheckChecked1" aria-label="..." checked />
+                                            </div>
+                                        </th>
                                         <td>Winter 2022</td>
                                         <td>2022-01-28</td>
                                         <td>
