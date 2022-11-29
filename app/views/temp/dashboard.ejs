@@ -16,7 +16,8 @@
                     <form action="/dashboard/<%= semester.id %>/exam/<%= exam.id %>" method="post">
                         <input type="text" id="name" name="name" placeholder="Name" value="<%= exam.name %>">
                         <input type="text" id="desc" name="desc" placeholder="Desc" value="<%= exam.desc %>">
-                        <input type="datetime-local" id="datetime" name="datetime" placeholder="DateTime" value="<%= exam.datetime.toISOString().slice(0,16) %>">
+                        <input type="date" id="examDate" name="examDate" placeholder="Date" value="<%= exam.datetime.toISOString().slice(0,10) %>">
+                        <input type="time" id="examTime" name="examTime" placeholder="Time" value="<%= exam.datetime.toISOString().slice(11,16) %>">
                         <select name="classId" id="classId" value="<%= exam.class %>">
                             <% classes.forEach(c => { %>
                                 <option value="<%= c.id %>"><%= c.name %></option>
@@ -45,7 +46,8 @@
                         <input type="text" id="name" name="name" placeholder="Name" value="<%= assignment.name %>">
                         <input type="text" id="desc" name="desc" placeholder="Desc" value="<%= assignment.desc %>">
                         <input type="number" id="estimatedDays" name="estimatedDays" placeholder="Estimated Days" value="<%= assignment.estimatedDays %>">
-                        <input type="datetime-local" id="due" name="due" placeholder="DateTime" value="<%= assignment.due.toISOString().slice(0,16) %>">
+                        <input type="date" id="dueDate" name="dueDate" placeholder="Date" value="<%= assignment.due.toISOString().slice(0,10) %>">
+                        <input type="time" id="dueTime" name="dueTime" placeholder="Time" value="<%= assignment.due.toISOString().slice(11,16) %>">
                         <input type="number" id="progress" name="progress" placeholder="Progress" value="<%= assignment.progress %>">
                         <select name="classId" id="classId">
                             <% classes.forEach(classObj => { %>

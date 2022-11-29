@@ -298,12 +298,12 @@ router.get('/:semId/new', verifyAuthentication, loadSemester, (req, res) => {
 });
 
 router.post('/:semId/new/assignment', verifyAuthentication, loadSemester, verifyClass, (req, res) => {
-    const {name, desc, estimatedDays, due, classId} = req.body;
+    const {name, desc, estimatedDays, dueDate, dueTime, classId} = req.body;
 
     const errors = [];
 
     const parsedEstimatedDays = parseInt(estimatedDays);
-    const parsedDue = Date.parse(due);
+    const parsedDue = Date.parse(`${dueDate}T${dueTime}+00:00`);
 
     if(isNaN(parsedEstimatedDays)) errors.push('Estimated Days to Complete must be a number');
     if(isNaN(parsedDue)) errors.push('Due Date must be a valid date');
@@ -327,12 +327,12 @@ router.post('/:semId/new/assignment', verifyAuthentication, loadSemester, verify
 });
 
 router.post('/:semId/assignment/:assignId', verifyAuthentication, loadSemester, verifyClass, loadAssignment, (req, res) => {
-    const {name, desc, estimatedDays, due, classId, progress} = req.body;
+    const {name, desc, estimatedDays, dueDate, dueTime, classId, progress} = req.body;
 
     let errors = [];
 
     const parsedEstimatedDays = parseInt(estimatedDays);
-    const parsedDue = Date.parse(due);
+    const parsedDue = Date.parse(`${dueDate}T${dueTime}+00:00`);
     const parsedProgress = parseInt(progress);
 
     if(isNaN(parsedEstimatedDays)) errors.push('Estimated Days to Complete must be a number');
@@ -362,11 +362,11 @@ router.get('/:semId/assignment/:assignId/delete', verifyAuthentication, loadSeme
 });
 
 router.post('/:semId/new/exam', verifyAuthentication, loadSemester, verifyClass, (req, res) => {
-    const {name, desc, datetime, classId} = req.body;
+    const {name, desc, examDate, examTime, classId} = req.body;
 
     const errors = [];
 
-    const parsedDatetime = Date.parse(datetime);
+    const parsedDatetime = Date.parse(`${examDate}T${examTime}+00:00`);
 
     if(isNaN(parsedDatetime)) errors.push('Exam date must be a valid date');
 
@@ -388,11 +388,11 @@ router.post('/:semId/new/exam', verifyAuthentication, loadSemester, verifyClass,
 });
 
 router.post('/:semId/exam/:examId', verifyAuthentication, loadSemester, verifyClass, loadExam, (req, res) => {
-    const {name, desc, datetime, classId} = req.body;
+    const {name, desc, examDate, examTime, classId} = req.body;
 
     const errors = [];
 
-    const parsedDatetime = Date.parse(datetime);
+    const parsedDatetime = Date.parse(`${examDate}T${examTime}+00:00`);
 
     if(isNaN(parsedDatetime)) errors.push('Exam date must be a valid date');
 

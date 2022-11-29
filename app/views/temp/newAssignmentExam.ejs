@@ -4,7 +4,8 @@
     <input type="text" id="name" name="name" placeholder="Name">
     <input type="text" id="desc" name="desc" placeholder="Desc">
     <input type="number" id="estimatedDays" name="estimatedDays" placeholder="Estimated Days">
-    <input type="datetime-local" id="due" name="due" placeholder="DateTime">
+    <input type="date" id="dueDate" name="dueDate" placeholder="Date">
+    <input type="time" id="dueTime" name="dueTime" placeholder="Time">
     <select name="classId" id="classId">
         <% classes.forEach(classObj => { %>
             <option value="<%= classObj.id %>"><%= classObj.name %></option>
@@ -19,7 +20,8 @@
 <form action="/dashboard/<%= semester.id %>/new/exam" method="post">
     <input type="text" id="name" name="name" placeholder="Name">
     <input type="text" id="desc" name="desc" placeholder="Desc">
-    <input type="datetime-local" id="datetime" name="datetime" placeholder="DateTime">
+    <input type="date" id="examDate" name="examDate" placeholder="Date">
+    <input type="time" id="examTime" name="examTime" placeholder="Time">
     <select name="classId" id="classId">
         <% classes.forEach(classObj => { %>
             <option value="<%= classObj.id %>"><%= classObj.name %></option>
