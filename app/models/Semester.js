@@ -1,10 +1,8 @@
 const mongoose = require('mongoose');
 
-const UserSchema = require('./User').Schema;
-
 const SemesterSchema = new mongoose.Schema({
     name: String,
-    user: UserSchema,
+    user: mongoose.Schema.Types.ObjectId,
     created: {
         type: Date,
         default: Date.now
@@ -13,4 +11,4 @@ const SemesterSchema = new mongoose.Schema({
 
 const Semester = mongoose.model('Semester', SemesterSchema);
 
-module.exports = {Model: Semester, Schema: SemesterSchema};
+module.exports = Semester;

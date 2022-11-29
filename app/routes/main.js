@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 
-const User = require('../models/User').Model;
+const User = require('../models/User');
 
 router.get('/', (req, res) => {
     res.render('landing');

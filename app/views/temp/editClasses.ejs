@@ -1,0 +1,29 @@
+<!-- This is the page where /dashboard/:semId/editClasses will route to -->
+<!-- This page will display all the classes added, allow you to edit them, and allow new classes to be added (I'm open to splitting this into multiple pages if need be!) -->
+<a href="/dashboard/<%= semester.id %>">Back</a>
+
+<form action="/dashboard/<%= semester.id %>/editClasses/new" method="post">
+    <input type="text" id="name" name="name" placeholder="Name">
+    <input type="text" id="prof" name="prof" placeholder="Prof">
+    <input type="text" id="location" name="location" placeholder="Location">
+    <input type="color" id="color" name="color" placeholder="Color">
+    <button type="submit">Submit</button>
+</form>
+
+<hr>
+
+<div>
+    <% classes.forEach(classObj => { %>
+        <div>
+            <h3><%= classObj.name %></h3>
+            <form action="/dashboard/<%= semester.id %>/editClasses/<%= classObj.id %>" method="post">
+                <input type="text" id="name" name="name" placeholder="Name" value="<%= classObj.name %>">
+                <input type="text" id="prof" name="prof" placeholder="Prof" value="<%= classObj.prof %>">
+                <input type="text" id="location" name="location" placeholder="Location" value="<%= classObj.location %>">
+                <input type="color" id="color" name="color" placeholder="Color" value="<%= classObj.color %>">
+                <button type="submit">Update</button>
+            </form>
+            <a href="/dashboard/<%= semester.id %>/editClasses/<%= classObj.id %>/delete">Delete</a>
+        </div>
+    <% }); %>
+</div>
