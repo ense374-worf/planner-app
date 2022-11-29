@@ -1,0 +1,5 @@
+<!-- This is the page where /dashboard/ will route to -->
+<!-- This page will display all the semesters added and allow you to select the semester you want to look at -->
+<% semesters.forEach(semester => { %>
+    <a href="/dashboard/<%= semester.id %>"><%= semester.name %></a>
+<% }); %>

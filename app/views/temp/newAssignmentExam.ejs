@@ -1,0 +1,28 @@
+<h1>Assignment</h1>
+<form action="/dashboard/<%= semester.id %>/new/assignment" method="post">
+    <input type="text" id="name" name="name" placeholder="Name">
+    <input type="text" id="desc" name="desc" placeholder="Desc">
+    <input type="number" id="estimatedDays" name="estimatedDays" placeholder="Estimated Days">
+    <input type="datetime-local" id="due" name="due" placeholder="DateTime">
+    <select name="classId" id="classId">
+        <% classes.forEach(classObj => { %>
+            <option value="<%= classObj.id %>"><%= classObj.name %></option>
+        <% }); %>
+    </select>
+    <button type="submit">Submit</button>
+</form>
+
+<br/><br/><br/>
+
+<h1>Exam</h1>
+<form action="/dashboard/<%= semester.id %>/new/exam" method="post">
+    <input type="text" id="name" name="name" placeholder="Name">
+    <input type="text" id="desc" name="desc" placeholder="Desc">
+    <input type="datetime-local" id="datetime" name="datetime" placeholder="DateTime">
+    <select name="classId" id="classId">
+        <% classes.forEach(classObj => { %>
+            <option value="<%= classObj.id %>"><%= classObj.name %></option>
+        <% }); %>
+    </select>
+    <button type="submit">Submit</button>
+</form>
