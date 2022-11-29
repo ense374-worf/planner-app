@@ -6,6 +6,8 @@ const Class = require('../models/Class');
 const Assignment = require('../models/Assignment');
 const Exam = require('../models/Exam');
 
+const viewsFolder = 'dashboard';
+
 const {verifyAuthentication} = require('../passport/auth');
 
 //Middlewear to grab semester data if user is permitted to view it
@@ -98,17 +100,11 @@ const loadExam = (req, res, next) => {
 router.get('/', verifyAuthentication, (req, res) => {
     Semester.find({user: req.user})
         .then(semesters => {
-            res.render('temp/semesterSelect',{
+            res.render(`${viewsFolder}/semesterSelect`,{
                 user: req.user,
                 semesters
             });
         }).catch(err => console.error(err));
-});
-
-router.get('/new', verifyAuthentication, (req, res) => {
-    res.render('temp/newSemester',{
-        user: req.user
-    });
 });
 
 router.post('/new', verifyAuthentication, (req, res) => {
@@ -145,7 +141,7 @@ router.get('/:semId', verifyAuthentication, loadSemester, (req, res) => {
                     datetime: {$gt: Date.now()}
                 }).then(exams => {
     
-                    res.render('temp/dashboard', {
+                    res.render(`${viewsFolder}/dashboard`, {
                         user: req.user,
                         semester: req.semester,
                         classes,
@@ -209,7 +205,7 @@ router.get('/:semId/delete', verifyAuthentication, loadSemester, (req, res) => {
 router.get('/:semId/editClasses', verifyAuthentication, loadSemester, (req, res) => {
     Class.find({semester: req.semester.id})
         .then(classes => {
-            res.render('temp/editClasses', {
+            res.render(`${viewsFolder}/editClasses`, {
                 user: req.user,
                 semester: req.semester,
                 classes
@@ -289,7 +285,7 @@ router.get('/:semId/editClasses/:classId/delete', verifyAuthentication, loadSeme
 router.get('/:semId/new', verifyAuthentication, loadSemester, (req, res) => {
     Class.find({semester: req.semester.id})
         .then(classes => {
-            res.render('temp/newAssignmentExam', {
+            res.render(`${viewsFolder}/newAssignmentExam`, {
                 user: req.user,
                 semester: req.semester,
                 classes
