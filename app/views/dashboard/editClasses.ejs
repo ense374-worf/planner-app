@@ -37,7 +37,7 @@
             <% classes.forEach(classObj => { %>
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="heading-<%= classObj.id %>">
-                        <button class="accordion-button" type="button" style="background-color: <%= classObj.color %>; filter: saturate(.2);" data-bs-toggle="collapse" data-bs-target="#collapse-<%= classObj.id %>" aria-expanded="false" aria-controls="collapse-<%= classObj.id %>">
+                        <button class="accordion-button collapsed" type="button" style="background-color: <%= classObj.color %>; filter: saturate(.2);" data-bs-toggle="collapse" data-bs-target="#collapse-<%= classObj.id %>" aria-expanded="false" aria-controls="collapse-<%= classObj.id %>">
                             <div class="row w-100">
                                 <div class="col-4">
                                     <strong><%= classObj.name %></strong>

@@ -14,7 +14,201 @@
 <body>
     <%- include('../partials/dashboardNavbar.ejs'); %>
 
-    <!-- TODO: Dashboard -->
+    <div class="container pt-3">
+        <a class="btn btn-warning mb-3" href="/dashboard/<%= semester.id %>/editClasses">Edit Classes</a>
+        <div class="accordion mb-3" id="exam-list">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading-addExam">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-addExam" aria-expanded="false" aria-controls="collapse-addExam">
+                        <h1>Exams</h1>
+                    </button>
+                </h2>
+                <div id="collapse-addExam" class="accordion-collapse collapse" aria-labelledby="heading-addExam" data-bs-parent="#exam-list">
+                    <div class="accordion-body">
+                        <form action="/dashboard/<%= semester.id %>/new/exam" method="post">
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <input class="form-control" type="text" id="name" name="name" placeholder="Name">
+                                </div>   
+                                <div class="col">
+                                    <input class="form-control" type="text" id="desc" name="desc" placeholder="Description">
+                                </div> 
+                            </div>
+                            <div class="row mb-2">
+                                <label class="form-label" for="examDate">Date and Time</label>
+                                <div class="col-3">
+                                    <input class="form-control" type="date" id="examDate" name="examDate">
+                                </div>
+                                <div class="col-3">
+                                    <input class="form-control" type="time" id="examTime" name="examTime">
+                                </div>
+                                <div class="col-6">
+                                    <select class="form-control" name="classId" id="classId">
+                                        <% classes.forEach(classObj => { %>
+                                            <option value="<%= classObj.id %>"><%= classObj.name %></option>
+                                        <% }); %>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn btn-success" type="submit">New Exam</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <% exams.forEach(exam => { 
+               const classObj = classes.find(c => c.id == exam.class);    
+            %>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-<%= exam.id %>">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-<%= exam.id %>" aria-expanded="false" aria-controls="collapse-<%= exam.id %>">
+                            <span class="badge me-2" style="background-color: <%= classObj.color %>;"><%= classObj.name %></span>
+                            <%= exam.name %>
+                            <p class="mb-0 ms-5"><%= `${exam.datetime.toDateString()} @ ${exam.datetime.toISOString().slice(11,16)}` %></p>
+                        </button>
+                    </h2>
+                    <div id="collapse-<%= exam.id %>" class="accordion-collapse collapse" aria-labelledby="heading-<%= exam.id %>" data-bs-parent="#exam-list">
+                        <div class="accordion-body">
+                            <form action="/dashboard/<%= semester.id %>/exam/<%= exam.id %>" method="post">
+                                <div class="row mb-2">
+                                    <div class="col">
+                                        <input class="form-control" type="text" id="name" name="name" placeholder="Name" value="<%= exam.name %>">
+                                    </div>   
+                                    <div class="col">
+                                        <input class="form-control" type="text" id="desc" name="desc" placeholder="Description" value="<%= exam.desc %>">
+                                    </div> 
+                                </div>
+                                <div class="row mb-2">
+                                    <label class="form-label" for="examDate">Date and Time</label>
+                                    <div class="col-3">
+                                        <input class="form-control" type="date" id="examDate" name="examDate" value="<%= exam.datetime.toISOString().slice(0,10) %>">
+                                    </div>
+                                    <div class="col-3">
+                                        <input class="form-control" type="time" id="examTime" name="examTime" value="<%= exam.datetime.toISOString().slice(11,16) %>">
+                                    </div>
+                                    <div class="col-6">
+                                        <select class="form-control" name="classId" id="classId">
+                                            <% classes.forEach(classObj => { %>
+                                                <option <%= (classObj.id == exam.class) ? 'selected="selected"' : '' %> value="<%= classObj.id %>"><%= classObj.name %></option>
+                                            <% }); %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button class="btn btn-warning" type="submit">Update</button>
+                                <a class="btn btn-danger" href="/dashboard/<%= semester.id %>/exam/<%= exam.id %>/delete">Delete</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+
+        <div class="accordion mb-3" id="assignment-list">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading-addAssignment">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-addAssignment" aria-expanded="false" aria-controls="collapse-addAssignment">
+                        <h1>Assignments</h1>
+                    </button>
+                </h2>
+                <div id="collapse-addAssignment" class="accordion-collapse collapse" aria-labelledby="heading-addAssignment" data-bs-parent="#assignment-list">
+                    <div class="accordion-body">
+                        <form action="/dashboard/<%= semester.id %>/new/assignment" method="post">
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <input class="form-control" type="text" id="name" name="name" placeholder="Name">
+                                </div>   
+                                <div class="col">
+                                    <input class="form-control" type="text" id="desc" name="desc" placeholder="Description">
+                                </div> 
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-3">
+                                    <label class="form-label" for="due">Due</label>
+                                    <input class="form-control" type="date" id="due" name="due">
+                                </div>
+                                <div class="col-3">
+                                    <label class="form-label" for="estimatedDays">Estimated Days to Complete</label>
+                                    <input class="form-control" type="number" id="estimatedDays" name="estimatedDays">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label" for="classId">Class</label>
+                                    <select class="form-control" name="classId" id="classId">
+                                        <% classes.forEach(classObj => { %>
+                                            <option value="<%= classObj.id %>"><%= classObj.name %></option>
+                                        <% }); %>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn btn-success" type="submit">New Assignment</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <% assignments.forEach(assignment => { 
+               const classObj = classes.find(c => c.id == assignment.class);    
+            %>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-<%= assignment.id %>">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-<%= assignment.id %>" aria-expanded="false" aria-controls="collapse-<%= assignment.id %>">
+                            <span class="badge me-2" style="background-color: <%= classObj.color %>;"><%= classObj.name %></span>
+                            <%= assignment.name %>
+                            <p class="mb-0 ms-5">Due: <%= assignment.due.toDateString() %></p>
+                            <p class="mb-0 ms-5"><%= assignment.progress %>%</p>
+                        </button>
+                    </h2>
+                    <div id="collapse-<%= assignment.id %>" class="accordion-collapse collapse" aria-labelledby="heading-<%= assignment.id %>" data-bs-parent="#assignment-list">
+                        <div class="accordion-body">
+                            <form action="/dashboard/<%= semester.id %>/assignment/<%= assignment.id %>" method="post">
+                                <div class="row mb-2">
+                                    <div class="col">
+                                        <input class="form-control" type="text" id="name" name="name" placeholder="Name" value="<%= assignment.name %>">
+                                    </div>   
+                                    <div class="col">
+                                        <input class="form-control" type="text" id="desc" name="desc" placeholder="Description" value="<%= assignment.desc %>">
+                                    </div> 
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col">
+                                        <label for="progress" class="form-label" id="progress-label-<%= assignment.id %>">Progress <%= assignment.progress %>%</label>
+                                        <input 
+                                            type="range" 
+                                            class="form-range" 
+                                            id="progress" 
+                                            name="progress" 
+                                            min="0" 
+                                            max="100" 
+                                            step="1" 
+                                            value="<%= assignment.progress %>"
+                                            oninput="document.getElementById('progress-label-<%= assignment.id %>').textContent = `Progress ${this.value}%`;"
+                                        >
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-3">
+                                        <label class="form-label" for="due">Due</label>
+                                        <input class="form-control" type="date" id="due" name="due" value="<%= assignment.due.toISOString().slice(0,10) %>">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="form-label" for="estimatedDays">Estimated Days to Complete</label>
+                                        <input class="form-control" type="number" id="estimatedDays" name="estimatedDays" value="<%= assignment.estimatedDays %>">
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label" for="classId">Class</label>
+                                        <select class="form-control" name="classId" id="classId">
+                                            <% classes.forEach(classObj => { %>
+                                                <option <%= (classObj.id == assignment.class) ? 'selected="selected"' : '' %> value="<%= classObj.id %>"><%= classObj.name %></option>
+                                            <% }); %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button class="btn btn-warning" type="submit">Update</button>
+                                <a class="btn btn-danger" href="/dashboard/<%= semester.id %>/assignment/<%= assignment.id %>/delete">Delete</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>

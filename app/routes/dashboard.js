@@ -153,13 +153,11 @@ router.get('/:semId', verifyAuthentication, loadSemester, (req, res) => {
         }));
 
         Assignment.find({
-            class:  {$in: classIds},
-            progress: {$lt: 100}
+            class:  {$in: classIds}
         }).then(assignments => {
     
                 Exam.find({
                     class: {$in: classIds},
-                    datetime: {$gt: Date.now()}
                 }).then(exams => {
     
                     res.render(`${viewsFolder}/dashboard`, {
@@ -353,12 +351,12 @@ router.post('/:semId/new/assignment', verifyAuthentication, loadSemester, verify
 });
 
 router.post('/:semId/assignment/:assignId', verifyAuthentication, loadSemester, verifyClass, loadAssignment, (req, res) => {
-    const {name, desc, estimatedDays, dueDate, dueTime, classId, progress} = req.body;
+    const {name, desc, estimatedDays, due, classId, progress} = req.body;
 
     let errors = [];
 
     const parsedEstimatedDays = parseInt(estimatedDays);
-    const parsedDue = Date.parse(`${dueDate}T${dueTime}+00:00`);
+    const parsedDue = Date.parse(`${due}T00:00+00:00`);
     const parsedProgress = parseInt(progress);
 
     if(isNaN(parsedEstimatedDays)) errors.push('Estimated Days to Complete must be a number');
