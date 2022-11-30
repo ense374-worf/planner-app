@@ -1,12 +1,10 @@
 const mongoose = require('mongoose');
 
-const ClassSchema = require('./Class').Schema;
-
 const ExamSchema = new mongoose.Schema({
     name: String,
     desc: String,
     datetime: Date,
-    class: ClassSchema,
+    class: mongoose.Schema.Types.ObjectId,
     created: {
         type: Date,
         default: Date.now
@@ -15,4 +13,4 @@ const ExamSchema = new mongoose.Schema({
 
 const Exam = mongoose.model('Exam', ExamSchema);
 
-module.exports = {Model: Exam, Schema: ExamSchema};
+module.exports = Exam;

@@ -3,7 +3,8 @@ const router = express.Router();
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 
-const User = require('../models/User').Model;
+const User = require('../models/User');
+const Message = require('../models/Message');
 
 router.get('/', (req, res) => {
     res.render('landing');
@@ -83,6 +84,33 @@ router.get('/about-us', (req, res) => {
 
 router.get('/contact', (req, res) => {
     res.render('contact');
+});
+
+router.post('/contact', (req, res) => {
+    const {name, email, subject, message} = req.body;
+
+    let errors = [];
+
+    if(!name || !email || !subject || !message) errors.push('Please fill all fields');
+
+    if(errors.length > 0){
+        return res.render('contact', {
+            errors
+        });
+    }
+
+    const newMessage = new Message({
+        name,
+        email,
+        subject,
+        message
+    });
+
+    newMessage.save()
+        .then(() => {
+            res.redirect('/contact');
+        }).catch(err => console.error(err));
+    
 });
 
 module.exports = router;
