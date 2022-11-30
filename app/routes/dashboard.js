@@ -310,30 +310,20 @@ router.get('/:semId/editClasses/:classId/delete', verifyAuthentication, loadSeme
         }).catch(err => console.error(err));
 });
 
-router.get('/:semId/new', verifyAuthentication, loadSemester, (req, res) => {
-    Class.find({semester: req.semester.id})
-        .then(classes => {
-            res.render(`${viewsFolder}/newAssignmentExam`, {
-                user: req.user,
-                semester: req.semester,
-                classes
-            });
-        }).catch(err => console.error(err));
-});
-
 router.post('/:semId/new/assignment', verifyAuthentication, loadSemester, verifyClass, (req, res) => {
-    const {name, desc, estimatedDays, dueDate, dueTime, classId} = req.body;
+    const {name, desc, estimatedDays, due, classId} = req.body;
 
     const errors = [];
 
     const parsedEstimatedDays = parseInt(estimatedDays);
-    const parsedDue = Date.parse(`${dueDate}T${dueTime}+00:00`);
+    const parsedDue = Date.parse(`${due}T00:00+00:00`);
 
     if(isNaN(parsedEstimatedDays)) errors.push('Estimated Days to Complete must be a number');
     if(isNaN(parsedDue)) errors.push('Due Date must be a valid date');
 
     if(errors.length > 0){
-        return res.redirect(`/dashboard/${req.semester.id}/new`);
+        console.log(errors);
+        return res.redirect(`/dashboard/${req.semester.id}`);
     }
 
     const newAssignment = new Assignment({
@@ -395,7 +385,8 @@ router.post('/:semId/new/exam', verifyAuthentication, loadSemester, verifyClass,
     if(isNaN(parsedDatetime)) errors.push('Exam date must be a valid date');
 
     if(errors.length > 0){
-        return res.redirect(`/dashboard/${req.semester.id}/new`);
+        console.log(errors);
+        return res.redirect(`/dashboard/${req.semester.id}`);
     }
 
     const newExam = new Exam({

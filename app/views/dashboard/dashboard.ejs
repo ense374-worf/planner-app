@@ -63,7 +63,7 @@
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-<%= exam.id %>" aria-expanded="false" aria-controls="collapse-<%= exam.id %>">
                             <span class="badge me-2" style="background-color: <%= classObj.color %>;"><%= classObj.name %></span>
                             <%= exam.name %>
-                            <p class="mb-0 ms-5"><%= `${exam.datetime.toDateString()} @ ${exam.datetime.toISOString().slice(11,16)}` %></p>
+                            <p class="mb-0 ms-5"><%= exam.datetime.toUTCString().slice(0,25) %></p>
                         </button>
                     </h2>
                     <div id="collapse-<%= exam.id %>" class="accordion-collapse collapse" aria-labelledby="heading-<%= exam.id %>" data-bs-parent="#exam-list">
@@ -151,7 +151,7 @@
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-<%= assignment.id %>" aria-expanded="false" aria-controls="collapse-<%= assignment.id %>">
                             <span class="badge me-2" style="background-color: <%= classObj.color %>;"><%= classObj.name %></span>
                             <%= assignment.name %>
-                            <p class="mb-0 ms-5">Due: <%= assignment.due.toDateString() %></p>
+                            <p class="mb-0 ms-5">Due: <%= assignment.due.toUTCString().slice(0,16) %></p>
                             <p class="mb-0 ms-5"><%= assignment.progress %>%</p>
                         </button>
                     </h2>
@@ -208,6 +208,164 @@
                 </div>
             <% }); %>
         </div>
+    </div>
+
+    <%
+        Date.prototype.addDays = function(days) {
+            var date = new Date(this.valueOf());
+            date.setDate(date.getDate() + days);
+            return date;
+        }
+
+        const today = new Date();
+        today.setHours(0);
+        today.setMinutes(0);
+        today.setSeconds(0);
+        const startOfWeek = today.addDays(-today.getDay());
+        const visibleExams = exams.filter(exam => exam.datetime > startOfWeek && exam.datetime < startOfWeek.addDays(7));
+        const visibleAssignments = assignments.filter(assignment => 
+            (assignment.due > startOfWeek && assignment.due < startOfWeek.addDays(7)) ||
+            (assignment.due.addDays(-assignment.estimatedDays) > startOfWeek && assignment.due.addDays(-assignment.estimatedDays) < startOfWeek.addDays(7)) || 
+            (assignment.due > startOfWeek.addDays(7) && assignment.due.addDays(-assignment.estimatedDays) < startOfWeek)
+        );
+    %>
+
+    <div class="p-4 text-center">
+        <div class="row">
+            <div class="col">
+                <%= startOfWeek.toUTCString().slice(0,16) %>
+            </div>
+            <div class="col">
+                <%= startOfWeek.addDays(1).toUTCString().slice(0,16) %>
+            </div>
+            <div class="col">
+                <%= startOfWeek.addDays(2).toUTCString().slice(0,16) %>
+            </div>
+            <div class="col">
+                <%= startOfWeek.addDays(3).toUTCString().slice(0,16) %>
+            </div>
+            <div class="col">
+                <%= startOfWeek.addDays(4).toUTCString().slice(0,16) %>
+            </div>
+            <div class="col">
+                <%= startOfWeek.addDays(5).toUTCString().slice(0,16) %>
+            </div>
+            <div class="col">
+                <%= startOfWeek.addDays(6).toUTCString().slice(0,16) %>
+            </div>
+        </div>
+        <hr>
+        <% visibleExams.forEach(exam => { 
+                const classObj = classes.find(c => c.id == exam.class);    
+        %>
+            <div class="row">
+                <div class="col">
+                    <% if(exam.datetime.getDate() === startOfWeek.getDate()){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= exam.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(exam.datetime.getDate() === startOfWeek.addDays(1).getDate()){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= exam.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(exam.datetime.getDate() === startOfWeek.addDays(2).getDate()){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= exam.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(exam.datetime.getDate() === startOfWeek.addDays(3).getDate()){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= exam.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(exam.datetime.getDate() === startOfWeek.addDays(4).getDate()){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= exam.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(exam.datetime.getDate() === startOfWeek.addDays(5).getDate()){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= exam.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(exam.datetime.getDate() === startOfWeek.addDays(6).getDate()){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= exam.name %>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        <% }); %>
+        <% startOfWeek.setDate(startOfWeek.getDate() - 1); %>
+        <% visibleAssignments.forEach(assignment => { 
+            const classObj = classes.find(c => c.id == assignment.class);    
+        %>
+            <div class="row">
+                <div class="col">
+                    <% if(startOfWeek >= assignment.due.addDays(-assignment.estimatedDays) && startOfWeek <= assignment.due){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= assignment.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(startOfWeek.addDays(1) >= assignment.due.addDays(-assignment.estimatedDays) && startOfWeek.addDays(1) <= assignment.due){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= assignment.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(startOfWeek.addDays(2) >= assignment.due.addDays(-assignment.estimatedDays) && startOfWeek.addDays(2) <= assignment.due){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= assignment.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(startOfWeek.addDays(3) >= assignment.due.addDays(-assignment.estimatedDays) && startOfWeek.addDays(3) <= assignment.due){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= assignment.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(startOfWeek.addDays(4) >= assignment.due.addDays(-assignment.estimatedDays) && startOfWeek.addDays(4) <= assignment.due){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= assignment.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(startOfWeek.addDays(5) >= assignment.due.addDays(-assignment.estimatedDays) && startOfWeek.addDays(5) <= assignment.due){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= assignment.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(startOfWeek.addDays(6) >= assignment.due.addDays(-assignment.estimatedDays) && startOfWeek.addDays(6) <= assignment.due){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= assignment.name %>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+    <% }); %>
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
