@@ -1,5 +1,5 @@
 <!-- This is the page where /dashboard/:semId (where :semId is replaced with the id of the semester) will route to -->
-<!-- This page will display all the tasks, exams, etc for the semester selectedaaa -->
+<!-- This page will display all the tasks, exams, etc for the semester selected -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,226 +7,368 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/public/css/dashboard.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link href="/public/css/mobiscroll.javascript.min.css" rel="stylesheet" />
-    <script src="/public/js/mobiscroll.javascript.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <title>Study Sense - Dashboard</title>
 </head>
-<style>
-    .demo-month-view {
-        height: 100%;
-    }
-</style>
 
 <body>
     <%- include('../partials/dashboardNavbar.ejs'); %>
-    <div class="container text-center pt-5">
-        <a href="/dashboard/<%= semester.id %>/editClasses" class="btn btn-warning float-start">Edit Classes</a>
-        <div class="container">
-            <br></br>
 
-            <div class="row">
-                <div class="col-12">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Event/Task</br> </th>
-                                <th scope="col">Todo/Done</br></th>
-                                <th scope="col">Due Date </th>
-                                <th scope="col">Notes</br></th>
-                                <th scope="col">Reminder</br></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    Clean my room
-                                </td>
-                                <td>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1"
-                                            checked>
-                                        <label class="custom-control-label" for="customCheck1"></label>
-                                    </div>
-                                </td>
-                                <td>2022-10-08</td>
-                                <td>DO IT NOW</td>
-                                <td>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1"
-                                            checked>
-                                        <label class="custom-control-label" for="customCheck1"></label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Clean my room
-                                </td>
-                                <td>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1"
-                                            checked>
-                                        <label class="custom-control-label" for="customCheck1"></label>
-                                    </div>
-                                </td>
-                                <td>2022-10-08</td>
-                                <td>DO IT NOW</td>
-                                <td>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1"
-                                            checked>
-                                        <label class="custom-control-label" for="customCheck1"></label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Clean my room
-                                </td>
-                                <td>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1"
-                                            checked>
-                                        <label class="custom-control-label" for="customCheck1"></label>
-                                    </div>
-                                </td>
-                                <td>2022-10-08</td>
-                                <td>DO IT NOW</td>
-                                <td>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1"
-                                            checked>
-                                        <label class="custom-control-label" for="customCheck1"></label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Clean my room
-                                </td>
-                                <td>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1"
-                                            checked>
-                                        <label class="custom-control-label" for="customCheck1"></label>
-                                    </div>
-                                </td>
-                                <td>2022-10-08</td>
-                                <td>DO IT NOW</td>
-                                <td>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1"
-                                            checked>
-                                        <label class="custom-control-label" for="customCheck1"></label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Clean my room
-                                </td>
-                                <td>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1"
-                                            checked>
-                                        <label class="custom-control-label" for="customCheck1"></label>
-                                    </div>
-                                </td>
-                                <td>2022-10-08</td>
-                                <td>DO IT NOW</td>
-                                <td>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1"
-                                            checked>
-                                        <label class="custom-control-label" for="customCheck1"></label>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+    <div class="container pt-3">
+        <a class="btn btn-warning mb-3" href="/dashboard/<%= semester.id %>/editClasses">Edit Classes</a>
+        <div class="accordion mb-3" id="exam-list">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading-addExam">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-addExam" aria-expanded="false" aria-controls="collapse-addExam">
+                        <h1>Exams</h1>
+                    </button>
+                </h2>
+                <div id="collapse-addExam" class="accordion-collapse collapse" aria-labelledby="heading-addExam" data-bs-parent="#exam-list">
+                    <div class="accordion-body">
+                        <form action="/dashboard/<%= semester.id %>/new/exam" method="post">
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <input class="form-control" type="text" id="name" name="name" placeholder="Name">
+                                </div>   
+                                <div class="col">
+                                    <input class="form-control" type="text" id="desc" name="desc" placeholder="Description">
+                                </div> 
+                            </div>
+                            <div class="row mb-2">
+                                <label class="form-label" for="examDate">Date and Time</label>
+                                <div class="col-3">
+                                    <input class="form-control" type="date" id="examDate" name="examDate">
+                                </div>
+                                <div class="col-3">
+                                    <input class="form-control" type="time" id="examTime" name="examTime">
+                                </div>
+                                <div class="col-6">
+                                    <select class="form-control" name="classId" id="classId">
+                                        <% classes.forEach(classObj => { %>
+                                            <option value="<%= classObj.id %>"><%= classObj.name %></option>
+                                        <% }); %>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn btn-success" type="submit">New Exam</button>
+                        </form>
+                    </div>
                 </div>
             </div>
+            <% exams.forEach(exam => { 
+               const classObj = classes.find(c => c.id == exam.class);    
+            %>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-<%= exam.id %>">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-<%= exam.id %>" aria-expanded="false" aria-controls="collapse-<%= exam.id %>">
+                            <span class="badge me-2" style="background-color: <%= classObj.color %>;"><%= classObj.name %></span>
+                            <%= exam.name %>
+                            <p class="mb-0 ms-5"><%= exam.datetime.toUTCString().slice(0,25) %></p>
+                        </button>
+                    </h2>
+                    <div id="collapse-<%= exam.id %>" class="accordion-collapse collapse" aria-labelledby="heading-<%= exam.id %>" data-bs-parent="#exam-list">
+                        <div class="accordion-body">
+                            <form action="/dashboard/<%= semester.id %>/exam/<%= exam.id %>" method="post">
+                                <div class="row mb-2">
+                                    <div class="col">
+                                        <input class="form-control" type="text" id="name" name="name" placeholder="Name" value="<%= exam.name %>">
+                                    </div>   
+                                    <div class="col">
+                                        <input class="form-control" type="text" id="desc" name="desc" placeholder="Description" value="<%= exam.desc %>">
+                                    </div> 
+                                </div>
+                                <div class="row mb-2">
+                                    <label class="form-label" for="examDate">Date and Time</label>
+                                    <div class="col-3">
+                                        <input class="form-control" type="date" id="examDate" name="examDate" value="<%= exam.datetime.toISOString().slice(0,10) %>">
+                                    </div>
+                                    <div class="col-3">
+                                        <input class="form-control" type="time" id="examTime" name="examTime" value="<%= exam.datetime.toISOString().slice(11,16) %>">
+                                    </div>
+                                    <div class="col-6">
+                                        <select class="form-control" name="classId" id="classId">
+                                            <% classes.forEach(classObj => { %>
+                                                <option <%= (classObj.id == exam.class) ? 'selected="selected"' : '' %> value="<%= classObj.id %>"><%= classObj.name %></option>
+                                            <% }); %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button class="btn btn-warning" type="submit">Update</button>
+                                <a class="btn btn-danger" href="/dashboard/<%= semester.id %>/exam/<%= exam.id %>/delete">Delete</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
         </div>
-        <br>
 
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            Add Task/Event
-        </button>
-
-        <!-- Modal -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Add Task/Event</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <input class="form-control" type="text" placeholder="Task/Event"> <br></br>
-                        <input class="form-control" type="text" placeholder="Notes"> <br></br>
-                        <br></br>
-                        <label for="start">Start date:</label>
-                        <input type="date" id="start" name="start">
-
-                        <label for="start">End date:</label>
-                        <input type="date" id="end" name="end"><br></br>
-
-                        <label for="time">Choose a time</label>
-
-                        <input type="time" id="time" name="time"><br></br>
-
-                        <a>Reminder <input class="form-check-input" type="checkbox" value=""
-                                id="flexCheckDefault" /></a>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary">Add</button>
+        <div class="accordion mb-3" id="assignment-list">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading-addAssignment">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-addAssignment" aria-expanded="false" aria-controls="collapse-addAssignment">
+                        <h1>Assignments</h1>
+                    </button>
+                </h2>
+                <div id="collapse-addAssignment" class="accordion-collapse collapse" aria-labelledby="heading-addAssignment" data-bs-parent="#assignment-list">
+                    <div class="accordion-body">
+                        <form action="/dashboard/<%= semester.id %>/new/assignment" method="post">
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <input class="form-control" type="text" id="name" name="name" placeholder="Name">
+                                </div>   
+                                <div class="col">
+                                    <input class="form-control" type="text" id="desc" name="desc" placeholder="Description">
+                                </div> 
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-3">
+                                    <label class="form-label" for="due">Due</label>
+                                    <input class="form-control" type="date" id="due" name="due">
+                                </div>
+                                <div class="col-3">
+                                    <label class="form-label" for="estimatedDays">Estimated Days to Complete</label>
+                                    <input class="form-control" type="number" id="estimatedDays" name="estimatedDays">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label" for="classId">Class</label>
+                                    <select class="form-control" name="classId" id="classId">
+                                        <% classes.forEach(classObj => { %>
+                                            <option value="<%= classObj.id %>"><%= classObj.name %></option>
+                                        <% }); %>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn btn-success" type="submit">New Assignment</button>
+                        </form>
                     </div>
                 </div>
             </div>
+            <% assignments.forEach(assignment => { 
+               const classObj = classes.find(c => c.id == assignment.class);    
+            %>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-<%= assignment.id %>">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-<%= assignment.id %>" aria-expanded="false" aria-controls="collapse-<%= assignment.id %>">
+                            <span class="badge me-2" style="background-color: <%= classObj.color %>;"><%= classObj.name %></span>
+                            <%= assignment.name %>
+                            <p class="mb-0 ms-5">Due: <%= assignment.due.toUTCString().slice(0,16) %></p>
+                            <p class="mb-0 ms-5"><%= assignment.progress %>%</p>
+                        </button>
+                    </h2>
+                    <div id="collapse-<%= assignment.id %>" class="accordion-collapse collapse" aria-labelledby="heading-<%= assignment.id %>" data-bs-parent="#assignment-list">
+                        <div class="accordion-body">
+                            <form action="/dashboard/<%= semester.id %>/assignment/<%= assignment.id %>" method="post">
+                                <div class="row mb-2">
+                                    <div class="col">
+                                        <input class="form-control" type="text" id="name" name="name" placeholder="Name" value="<%= assignment.name %>">
+                                    </div>   
+                                    <div class="col">
+                                        <input class="form-control" type="text" id="desc" name="desc" placeholder="Description" value="<%= assignment.desc %>">
+                                    </div> 
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col">
+                                        <label for="progress" class="form-label" id="progress-label-<%= assignment.id %>">Progress <%= assignment.progress %>%</label>
+                                        <input 
+                                            type="range" 
+                                            class="form-range" 
+                                            id="progress" 
+                                            name="progress" 
+                                            min="0" 
+                                            max="100" 
+                                            step="1" 
+                                            value="<%= assignment.progress %>"
+                                            oninput="document.getElementById('progress-label-<%= assignment.id %>').textContent = `Progress ${this.value}%`;"
+                                        >
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-3">
+                                        <label class="form-label" for="due">Due</label>
+                                        <input class="form-control" type="date" id="due" name="due" value="<%= assignment.due.toISOString().slice(0,10) %>">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="form-label" for="estimatedDays">Estimated Days to Complete</label>
+                                        <input class="form-control" type="number" id="estimatedDays" name="estimatedDays" value="<%= assignment.estimatedDays %>">
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label" for="classId">Class</label>
+                                        <select class="form-control" name="classId" id="classId">
+                                            <% classes.forEach(classObj => { %>
+                                                <option <%= (classObj.id == assignment.class) ? 'selected="selected"' : '' %> value="<%= classObj.id %>"><%= classObj.name %></option>
+                                            <% }); %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button class="btn btn-warning" type="submit">Update</button>
+                                <a class="btn btn-danger" href="/dashboard/<%= semester.id %>/assignment/<%= assignment.id %>/delete">Delete</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
         </div>
     </div>
-    </br>
-    <div id="demo-month-view"></div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-        crossorigin="anonymous"></script>
 
+    <%
+        Date.prototype.addDays = function(days) {
+            var date = new Date(this.valueOf());
+            date.setDate(date.getDate() + days);
+            return date;
+        }
+
+        const today = new Date();
+        today.setHours(0);
+        today.setMinutes(0);
+        today.setSeconds(0);
+        const startOfWeek = today.addDays(-today.getDay());
+        const visibleExams = exams.filter(exam => exam.datetime > startOfWeek && exam.datetime < startOfWeek.addDays(7));
+        const visibleAssignments = assignments.filter(assignment => 
+            (assignment.due > startOfWeek && assignment.due < startOfWeek.addDays(7)) ||
+            (assignment.due.addDays(-assignment.estimatedDays) > startOfWeek && assignment.due.addDays(-assignment.estimatedDays) < startOfWeek.addDays(7)) || 
+            (assignment.due > startOfWeek.addDays(7) && assignment.due.addDays(-assignment.estimatedDays) < startOfWeek)
+        );
+    %>
+
+    <div class="p-4 text-center">
+        <div class="row">
+            <div class="col">
+                <%= startOfWeek.toUTCString().slice(0,16) %>
+            </div>
+            <div class="col">
+                <%= startOfWeek.addDays(1).toUTCString().slice(0,16) %>
+            </div>
+            <div class="col">
+                <%= startOfWeek.addDays(2).toUTCString().slice(0,16) %>
+            </div>
+            <div class="col">
+                <%= startOfWeek.addDays(3).toUTCString().slice(0,16) %>
+            </div>
+            <div class="col">
+                <%= startOfWeek.addDays(4).toUTCString().slice(0,16) %>
+            </div>
+            <div class="col">
+                <%= startOfWeek.addDays(5).toUTCString().slice(0,16) %>
+            </div>
+            <div class="col">
+                <%= startOfWeek.addDays(6).toUTCString().slice(0,16) %>
+            </div>
+        </div>
+        <hr>
+        <% visibleExams.forEach(exam => { 
+                const classObj = classes.find(c => c.id == exam.class);    
+        %>
+            <div class="row">
+                <div class="col">
+                    <% if(exam.datetime.getDate() === startOfWeek.getDate()){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= exam.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(exam.datetime.getDate() === startOfWeek.addDays(1).getDate()){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= exam.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(exam.datetime.getDate() === startOfWeek.addDays(2).getDate()){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= exam.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(exam.datetime.getDate() === startOfWeek.addDays(3).getDate()){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= exam.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(exam.datetime.getDate() === startOfWeek.addDays(4).getDate()){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= exam.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(exam.datetime.getDate() === startOfWeek.addDays(5).getDate()){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= exam.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(exam.datetime.getDate() === startOfWeek.addDays(6).getDate()){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= exam.name %>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        <% }); %>
+        <% startOfWeek.setDate(startOfWeek.getDate() - 1); %>
+        <% visibleAssignments.forEach(assignment => { 
+            const classObj = classes.find(c => c.id == assignment.class);    
+        %>
+            <div class="row">
+                <div class="col">
+                    <% if(startOfWeek >= assignment.due.addDays(-assignment.estimatedDays) && startOfWeek <= assignment.due){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= assignment.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(startOfWeek.addDays(1) >= assignment.due.addDays(-assignment.estimatedDays) && startOfWeek.addDays(1) <= assignment.due){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= assignment.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(startOfWeek.addDays(2) >= assignment.due.addDays(-assignment.estimatedDays) && startOfWeek.addDays(2) <= assignment.due){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= assignment.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(startOfWeek.addDays(3) >= assignment.due.addDays(-assignment.estimatedDays) && startOfWeek.addDays(3) <= assignment.due){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= assignment.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(startOfWeek.addDays(4) >= assignment.due.addDays(-assignment.estimatedDays) && startOfWeek.addDays(4) <= assignment.due){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= assignment.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(startOfWeek.addDays(5) >= assignment.due.addDays(-assignment.estimatedDays) && startOfWeek.addDays(5) <= assignment.due){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= assignment.name %>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="col">
+                    <% if(startOfWeek.addDays(6) >= assignment.due.addDays(-assignment.estimatedDays) && startOfWeek.addDays(6) <= assignment.due){ %>
+                        <div class="card" style="background-color: <%= classObj.color %>;">
+                            <%= assignment.name %>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+    <% }); %>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
-<script>
-    mobiscroll.setOptions({
-        theme: 'ios',
-        themeVariant: 'light'
-    });
-
-    mobiscroll.eventcalendar('#demo-month-view', {
-        view: {
-            timeline: {
-                type: 'month'
-            }
-        },
-
-
-        data: [{
-            start: '2022-11-28T10:00',
-            end: '2022-11-30T11:15',
-            title: 'Project Presentation',
-        }, {
-            start: '2022-11-10T09:00',
-            end: '2022-11-15T15:00',
-            title: 'Go to CDE',
-        },
-        {
-            start: '2022-11-15T09:00',
-            end: '2022-11-20T15:00',
-            title: 'Return From CDE',
-        }],
-    });
-</script>
 
 </html>
