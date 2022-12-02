@@ -28,6 +28,8 @@ Set environment variables `MONGO_URI`, `PORT`, and `SECRET`. These can be locate
 Start the app with 
 `npm start`
 
+***
+
 ## Activity 1 
 [Project Idea Vlog](https://youtu.be/6wL67tMxihg)
 
