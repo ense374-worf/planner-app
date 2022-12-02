@@ -18,7 +18,7 @@ Install [Git](https://git-scm.com/) and [Nodejs](https://nodejs.org)
 ### Install
 `git clone https://github.com/ense374-worf/study-sense/`
 
-`cd study-sense`
+`cd study-sense/app`
 
 `npm install`
 
