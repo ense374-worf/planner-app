@@ -16,6 +16,8 @@ Students have a lot on their plate. With 4, 5, or even 6 concurrent classes it c
 Install [Git](https://git-scm.com/) and [Nodejs](https://nodejs.org)
 
 ### Install
+If you do not want to install Study Sense locally, you can access our instance of the project [Here](https://studysense.ignite.coehler.ca/)
+
 `git clone https://github.com/ense374-worf/study-sense/`
 
 `cd study-sense/app`
