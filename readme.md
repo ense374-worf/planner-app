@@ -5,9 +5,6 @@ Study Sense is a timetable and scheduling app made by students, for students. Cr
 ## The Team
 ![the team](/images/team.jpg)
 
-## Project idea
-Our idea is to create a solution for students that helps them to track their classes schedule, assignments, exams, and other tasks. Students also need a useful tool that is easy to reach out in preparing for the next assignment and for reminding them of due dates. Using the skills we have learned from both courses ense 374 and cs 215, our team members will be able to develop our web-based solution.
-
 ## Project background/Business Opportunity
 As a business need, many students are struggling with organizing their time scheduling, submitting assignments on time, and preparing for exams. Organizing classes scheduled is a skill that requires practicing time management and more than some information on a table, students need something to remind them as well, so that's more than just a timetable. Also, adding a visual experience supports memorizing information for a longer time. There are many other solutions out there that attempt to solve students' problems with organizing their time and tasks, however, we are the students, and we are designing the solution that suits our needs to be more successful in our studies and academics.
 
