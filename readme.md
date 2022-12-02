@@ -51,6 +51,13 @@ Start the app with
 
 [Vlog](https://youtu.be/KpzzaaRRZJQ)
 
+## Activity 5
+[Project Report](/documentation/project_closing/report.pdf)
+
+[Project Final Presentation](/documentation/project_closing/study_sense_final.pdf)
+
+[Project Commercial]()
+
 ## Project Vlogs
 [Activity 1](https://youtu.be/6wL67tMxihg)
 
