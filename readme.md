@@ -56,7 +56,7 @@ Start the app with
 
 [Project Final Presentation](/documentation/project_closing/study_sense_final.pdf)
 
-[Project Commercial]()
+[Project Commercial](https://www.youtube.com/watch?v=pZm_1bHphko)
 
 ## Project Vlogs
 [Activity 1](https://youtu.be/6wL67tMxihg)
@@ -65,7 +65,7 @@ Start the app with
 
 [Activity 3](https://youtu.be/KpzzaaRRZJQ)
 
-[Final Commercial]()
+[Final Commercial](https://www.youtube.com/watch?v=pZm_1bHphko)
 
 ## Legal Stuff
 This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License.](https://creativecommons.org/licenses/by-sa/4.0/)
