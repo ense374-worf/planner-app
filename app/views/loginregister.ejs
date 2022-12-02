@@ -3,18 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/css/style2.css">
-
+    <link href="/public/css/loginregister.css" rel="stylesheet">
     <title>Study Sense</title>
 </head>
 
 <body>
-
-
-    <div class="item3">
-        <div class="container item3 <%= (start === 'register') ? 'right-panel-active' : '' %>" id="container">
+    <div class="full-height">
+        <div class="container full-height <%= (start === 'register') ? 'right-panel-active' : '' %>" id="container">
             <div class="form-container sign-up-container">
                 <form action="/register" method="post">
                     <h1>Create Account</h1>
